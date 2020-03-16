@@ -1,0 +1,7 @@
+.gitconfig
+
+
+# Emacs related ignores
+.\#*
+\#*\#
+*~
