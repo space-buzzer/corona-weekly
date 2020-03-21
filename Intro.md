@@ -1,6 +1,12 @@
 # Introduction
 
-## Software Requirements
+Before we can jump into the projects, we need to define a shared terminology, and also install the needed software. All the software is free. The electronic components this guide will use are listed below, and can be easily purchased online (like I did). 
+
+All the projects here will be small simple electronics projects with a few componets and an Arduino Nano (a clone). 
+
+# Requirements
+
+##  Software Requirements
 - Arduino IDE: https://www.arduino.cc/en/Main/Software
 - Text editor (Emacs rulez!)
 - [Optional] Git: to fix bugs and contribute back, it's not necessary to participate
@@ -20,11 +26,11 @@ I plan on using the following parts:
 - RGB LED
 - Rotary encoder
 - Piezo buzzer
-- Resistors (100K)
+- Resistors (100Ω, 470Ω)
 - Trimpots (10K-50K)
 
 Fancier components:
-- LCD
+- OLED display
 - Clock (spec wil be updated soon)
 - Memory (will come up with spec later)
 
@@ -34,3 +40,18 @@ Tools:
 
 ## Time Commitment
 - Like a long weekly meeting, 2 hours
+
+
+# Quick start
+You can familiarize yourself with the components, and check that the Arduino powers up correctly:
+
+## Components needed:
+- Breadboard
+- Arduino
+- Mini USB cable
+- Jumper wires
+- 470Ω resistor
+- RGB LED (or normal LED, if available)
+
+
+##   
