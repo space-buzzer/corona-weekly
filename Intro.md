@@ -42,7 +42,9 @@ Plan for it like for a long weekly meeting + prep time. About 2 hours.
 
 
 # Quick start
-You can familiarize yourself with the components, and check that the Arduino powers up correctly:
+You can familiarize yourself with the components, and check that the Arduino powers up correctly.
+
+You'll build a simple circuit on a breadboard. No programming required, the use of the Arduino board is only for power management (Arduino is used as a battery), and the breadboard to get used to playing with a breadboard. The same circuit can be built with a battery, a LED and a resistor.
 
 ## Components
 - Breadboard
@@ -55,3 +57,6 @@ You can familiarize yourself with the components, and check that the Arduino pow
 
 ## Assembly
 ![](images/intro.png?raw=true)
+
+
+:arrow_right: On to [week 1](week1/README.md)
