@@ -55,7 +55,7 @@ You'll build a simple circuit on a breadboard. No programming required, the use 
 - RGB LED (or normal LED, if available)
 
 
-## Assembly
+## Circuit Diagram
 ![](images/intro.png?raw=true)
 
 
