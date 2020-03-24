@@ -23,7 +23,7 @@ A microcontroller is a small programmable computer, it'll usually include a CPU,
 
 
 ## Arduino Nano
-![](arduino_nano_w_leds.png)
+![](images/arduino_nano_w_leds.png)
 
 This is a diagram of the [Arduino Nano board](https://store.arduino.cc/usa/arduino-nano). It has 1 mini-USB connection.
 
@@ -44,7 +44,7 @@ A breadboard, is a quick way to connect and test electronics without the need to
 
 All breadboards have the same arrangements and they come in a few different sizes.
 
-![](breadboard.png)
+![](images/breadboard.png)
 
 The holes in a breadboard are connected among themselves in the following pattern:
 
@@ -56,7 +56,7 @@ In the diagram above, the green lines indicate holes that are connected together
 
 
 The Arduino Nano fits into a breadboard, and our projects will all start like this:
-![](breadboard_w_arduino.png)
+![](images/breadboard_w_arduino.png)
 
 ### Jumper wires
 Jumper wires are the wires with a needle-like tip, these go into the holes of the breadboard to connect different components to the Arduino, and connect the components to power.
@@ -67,7 +67,7 @@ Connecting anything on a breadboard with jumper wires utilizes the pre-existing 
 Refer to this list: [Intro/Software Requirements](../Intro.md#software-requirements) and make sure you have both Arduino IDE and the USB driver installed.
 
 Next, open Arduino IDE, make sure you installed the CH340 USB driver.
-![](arduino_ide.png)
+![](images/arduino_ide.png)
 
 **Choose the board and the port**
 
@@ -75,7 +75,7 @@ From the `Tools` menu select the `Board` and `Port` for your Arduino.
 * Board: Arduino Nano w/ ATmega328P (old bootloader)
 * Port: Serial port through USB, depends on the operating system.
 
-![](arduino_ide_board.png)
+![](images/arduino_ide_board.png)
 
 Arduino IDE projects are called *sketches*, the suffix for the file is `*.ino`.
 
@@ -88,7 +88,7 @@ Let's get to it!
 - Mini USB cable
 
 ### Circuit Diagram
-![](breadboard_w_arduino.png)
+![](images/breadboard_w_arduino.png)
 
 ### Arduino IDE
 The Arduino IDE, conveniently comes with a large collection of examples.
@@ -97,7 +97,7 @@ For this first project, we'll use an example instead of writing the code ourselv
 In Arduino IDE:
 
 `File` -> `Examples` -> `01. Basics` -> `Blink`
-![](arduino_ide_examples_blink.png)
+![](images/arduino_ide_examples_blink.png)
 
 Now upload the code to the Arduino:
 
@@ -141,6 +141,14 @@ void loop() {
 }
 ```
 
+### Buzzer
+
+Now we'll modify the code and breadboard configuration to make sound with a buzzer
+
+![](images/buzzer.png)
+
+
+Download the code from [buzzer/buzzer.ino](buzzer).
 
 
 ## Electronics & Electricity
