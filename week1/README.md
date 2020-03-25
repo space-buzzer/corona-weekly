@@ -150,6 +150,12 @@ Now we'll modify the code and breadboard configuration to make sound with a buzz
 
 Download the code from [buzzer/buzzer.ino](buzzer).
 
+# Summary
+- [ ] What is an Arduino
+- [ ] Using a breadboard
+- [ ] Using the Arduino IDE
+- [ ] Making sounds with a buzzer
+
 
 ## Electronics & Electricity
 
