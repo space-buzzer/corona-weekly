@@ -1,8 +1,6 @@
-/**
-* Notes to frequencies mapping.
-*
-* I found it online, there are many sources
-**/
+/*************************************************
+ * Public Constants
+ *************************************************/
 
 #define NOTE_B0  31
 #define NOTE_C1  33
