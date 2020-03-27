@@ -19,7 +19,7 @@ void setup() {
 }
 
 void loop() {
-  play_music(SUPER_MARIO);
+  play_music(STILL_ALIVE);
   delay(5000);
 }
 
