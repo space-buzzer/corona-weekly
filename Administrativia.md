@@ -10,6 +10,22 @@ This page has some ideas and plans for the future, that were not implemented yet
 6. [Optional] Extra credit: List of extensions to the project
 
 
+# Coding Conventios
+The structure of Arduino sketches is similar:
+- `setup` function
+- `loop` function
+
+We also need to configure a few constants
+
+## Comments
+I use the following section comments at the beginning of a section
+```c
+// *** SECTION NAME ***
+```
+
+## Configuration
+For simple programs, the configuration is in the main file (`*.ino`) under the Configuration section. For bigger projects, the configuration is in a separate file (`Configuration.h`) te keep things nice and simple, and for easier reconfiguration. 
+
 # Administrativia / TODO:
 These are not to me, with future plans
 
