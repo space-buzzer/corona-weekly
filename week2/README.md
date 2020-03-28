@@ -24,7 +24,7 @@ There are 2 functions to play and mute a buzzer with an Arduino:
    This function stops the buzzer from buzzing.
 
 
-Except for playing different frequencies, you might also want to change the volume 
+Except for playing different frequencies, you might also want to change the volume
 
 
 
@@ -46,6 +46,7 @@ Just like last week
 ![](images/buzzer.png)
 
 
-- [ ] Add image
-- [ ] add code
-
+## Recap
+- [ ] Buzzer mechanics
+- [ ] Using built-in functions: `delay` and `tone`
+- [ ] Adding multiple files to Arduino project

@@ -81,9 +81,9 @@ void handle_beep(STATE dev_state) {
   if (dev_state == STATE_A && (tick == 0 || tick >= interval)) {
     // buzz me
     tone(BUZZER, FREQ);
-    delay(100);
+    delay(BEEP_DURATION);
     noTone(BUZZER);
-    tick = (tick + 100) % interval;
+    tick = (tick + BEEP_DURATION) % interval;
   } else {
     delay(STEP);    
     tick = (tick + STEP) % interval;
