@@ -67,13 +67,14 @@ Connecting anything on a breadboard with jumper wires utilizes the pre-existing 
 Refer to this list: [Intro/Software Requirements](../Intro.md#software-requirements) and make sure you have both Arduino IDE and the USB driver installed.
 
 Next, open Arduino IDE, make sure you installed the CH340 USB driver.
-![](images/arduino_ide.png)
+![Arduino IDE](images/arduino_ide.png)
 
 **Choose the board and the port**
 
 From the `Tools` menu select the `Board` and `Port` for your Arduino.
-* Board: Arduino Nano w/ ATmega328P (old bootloader)
-* Port: Serial port through USB, depends on the operating system.
+* Board: **Arduino Nano**
+* Processor: **ATmega328P (old bootloader)**
+* Port: **Serial port through USB**, specific name will depend on the operating system (e.g., /dev/ttyUSB0)
 
 ![](images/arduino_ide_board.png)
 
@@ -97,13 +98,14 @@ For this first project, we'll use an example instead of writing the code ourselv
 In Arduino IDE:
 
 `File` -> `Examples` -> `01. Basics` -> `Blink`
+
 ![](images/arduino_ide_examples_blink.png)
 
 Now upload the code to the Arduino:
 
 `File` -> `Upload`
 
-Or click the :right-arrow: button in the button bar of the IDE.
+Or click the :right_arrow: button in the button bar of the IDE.
 
 You should see the generic LED (the bottom LED) start blinking slowly.
 
