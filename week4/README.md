@@ -8,6 +8,7 @@ We will use a buzzer (for the sounds), 4 push buttons for the different tunes an
 A push button is a mechanical component that can connect (or disconnect) a circuit when pushed.
 
 ![Push button diagram and schema](images/push_button.png)
+
 The photo shows a diagram of a push button on the right, and the schema on the left. When the button is pushed, the switch in the middle makes contact.
 
 To demonstrate how a push button works, we'll build a simple circuit that uses the arduino as a power source.
@@ -26,7 +27,7 @@ The more exciting component we'll be using is an RGB LED. This is like 3 LEDs in
 Becasue we control each of RGB pins separately, we'll need to use 3 resistors, one for each pin, and connect it to 3 different input pins on the Arduino.
 
 ### Circuit Diagram for RGB LED
-You'll need 
+You'll need:
 - 1 RGB LED
 - 3 470Ω resistors. Any resistor between 200 - 1K will work, the higher the resistance the dimmer the light will be (which is not bad, when playing with a bread board close to the eyes)
 
@@ -45,15 +46,15 @@ The code is pretty simple, just flashing all 3 LEDS one by one. From Arduino/cod
 
 // *** Configuration ***
 const int LED_R = 6;
-const int LEG_G = 5;
-const int LEG_B = 4;
+const int LED_G = 5;
+const int LED_B = 4;
 // ***
 
 int leds[] = {LED_R, LED_G, LED_B};
 
 void setup() {
   for (int i = 0; i < 3; i++) {
-    setMode(leds[i], OUTPUT);
+    pinMode(leds[i], OUTPUT);
   }
 }
 
@@ -64,10 +65,10 @@ void loop() {
     delay(500);
     digitalWrite(leds[i], LOW);
   }
-  delay(2000);
+  delay(1000);
 }
-
 ```
+
 
 
 Now that we're familiar with all the components, we can proceed to the main project.
@@ -89,8 +90,8 @@ Project specific needs:
 - 3 x 470Ω resistor
 - Piezo Buzzer
 - 1 x 100Ω resistor
-- 4 x push buttons
-- 4 x 100Ω +  resistors (you should have 470Ω available)
+- 4 x push buttons, preferrably painted in different colors: red, green, blue and yellow
+
 
 There are many components this time, and the board will be full of cables.
 
@@ -103,3 +104,6 @@ This is going to look a bit heavy, but the design allocates a clearing in front 
 
 ## Recap
 - [ ] Working with a push button
+- [ ] RGB LED
+- [ ] Debugging programs with Serial Monitor
+- [ ] Halting a program and setting the Arduino to sleep 
