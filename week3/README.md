@@ -47,8 +47,10 @@ First, in the code we'll open the Serial port, and then we can start writing to 
 Serial.begin(9600);
 
 // Writing into the Serial port
+Serial.begin(9600);
+Serial.println("Setting up board...");
+Serial.print("Numbers come next: ");
 Serial.print(12);
-Serial.println("Hello World");
 ```
 
 This opens the Serial channel on the Arduino side with boud rate of 9600 and then sends a few messages.
@@ -57,6 +59,10 @@ This opens the Serial channel on the Arduino side with boud rate of 9600 and the
 To open the Serial Monitor from Arduino IDE, go to `Tools` -> `Serial Monitor`
 
 ![Open Serial Monitor](images/arduino_ide_serial_monitor.png)
+
+Once you open it, if you had the lines above running, you should see
+
+![Serial Monitor](images/arduino_serial_monitor.png)
 
 
 ## Components
