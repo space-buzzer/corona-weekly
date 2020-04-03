@@ -1,7 +1,11 @@
 #include "music.h"
 
 // *** Configuration ***
-const int BUZZER = 4;
+const int BUZZER = 2;
+const int LED_R = 3;
+const int LED_G = 4;
+const int LED_B = 5;
+
 const int transition_fraction = 0.95;
 const int transition_delta = 0; //50;
 
@@ -12,14 +16,13 @@ const int STILL_ALIVE = 2;
 
 
 
-
 void setup() {
   // put your setup code here, to run once:
   pinMode(BUZZER, OUTPUT);
 }
 
 void loop() {
-  play_music(STILL_ALIVE);
+  play_music(SUPER_MARIO);
   delay(5000);
 }
 
@@ -70,9 +73,53 @@ void play_me(const int tune[], int tune_len, int tempo) {
     // There's a transition fraction and delta we can add -- to make transitions between
     // notes crisper
     if (tune[2*note] != REST) {
-      tone(BUZZER, tune[2*note], note_duration * transition_fraction - transition_delta);
+      play_tone(tune[2*note], note_duration * transition_fraction - transition_delta);
     }
     delay(note_duration);
-    noTone(BUZZER);
+    stop_tone();
   }
+}
+
+
+void play_tone(unsigned int freq, unsigned long duration) {
+  tone(BUZZER, freq, duration);
+
+  // light the LED based on frequency
+  // red, orange, yellow, green, light blue, blue, purple
+  if (freq <= NOTE_C2) {
+    set_color(255, 0, 0);
+  } else if (freq <= NOTE_C3) {
+    set_color(255, 128, 0);
+  } else if (freq <= NOTE_C4) {
+    set_color(255, 255, 0);
+  } else if (freq <= NOTE_C5) {
+    set_color(0, 255, 0);
+  } else if (freq <= NOTE_F5) {
+    set_color(0, 255, 255);
+  } else if (freq <= NOTE_C6) {
+    set_color(0, 128, 255);
+  } else if (freq <= NOTE_F6) {
+    set_color(0, 255, 128);
+  } else if (freq <= NOTE_C7) {
+    set_color(0, 0, 255);
+  } else if (freq <= NOTE_F7) {
+    set_color(127, 0, 255);
+  } else {
+    set_color(255, 0, 255);
+  }
+  
+}
+
+void stop_tone() {
+  noTone(BUZZER);
+
+  // turn off the LED
+  set_color(0, 0, 0);
+}
+
+
+void set_color(byte red, byte green, byte blue) {
+  analogWrite(LED_R, red);
+  analogWrite(LED_G, green);
+  analogWrite(LED_B, blue);  
 }

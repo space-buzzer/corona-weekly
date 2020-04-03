@@ -10,12 +10,61 @@ Based on this description, you see that a buzzer cannot play multiple sounds at 
 > Anecdote: Active buzzers have a sticker on the top saying "Remove after washing". This refers to industrial settings. The washing process is what industrial systems to do remove flux residue on the board after soldering and before finishing production. The sticker is there to protect the hole on the top of the buzzer.
 > Don't wash it, you can just remove
 
-> Note that when you remove the sticker, the buzzer will be louder 
+> Note that when you remove the sticker, the buzzer will be louder
 
+
+## RGB LED
+To make this project nicer, we'll also add an RGB LED. RGB LEDs are like 3 LEDs in one: it has 4 pins: 1 pin for ground (GND) and the other 3 for red (R), blue (B) and green (G).
+Becasue we control each of RGB pins separately, we'll need to use 3 resistors, one for each pin, and connect it to 3 different pins on the Arduino.
+
+### Circuit Diagram for RGB LED
+You'll need:
+- 1 RGB LED
+- 3 470Ω resistors. Any resistor between 200 - 1K will work, the higher the resistance the dimmer the light will be (which is not bad, when playing with a bread board close to the eyes)
+
+![RGB LED circuit with Arduino](images/rgb_led_circuit.png)
+
+
+### Code for RGB LED Example
+The full project  is available at [rgb_led_example/rgb_led_example.ino](rgb_led_example).
+
+The code is pretty simple, just flashing all 3 LEDS one by one. From Arduino/code perspective, there's no difference between having 3 distinct LEDs or having one RGB LED, it is treated in exactly the same way in code.
+
+```c
+/**
+ * RGB LED test example
+ */
+
+// *** Configuration ***
+const int LED_R = 3;
+const int LED_G = 4;
+const int LED_B = 5;
+// ***
+
+int leds[] = {LED_R, LED_G, LED_B};
+
+void setup() {
+  for (int i = 0; i < 3; i++) {
+    pinMode(leds[i], OUTPUT);
+  }
+}
+
+void loop() {
+  // flash leds in order
+  for (int i = 0; i < 3; i++) {
+    digitalWrite(leds[i], HIGH);
+    delay(500);
+    digitalWrite(leds[i], LOW);
+  }
+  delay(1000);
+}
+```
+
+
+After mastering RGB LED programming we can move on to the main project.
 
 ## Code
 The full project is available at [buzzer_tune/buzzer_tune.ino](buzzer_tune).
-
 
 
 There are 2 functions to control a buzzer with an Arduino:
@@ -70,3 +119,4 @@ Just like last week
 - [ ] Buzzer mechanics
 - [ ] Using built-in functions: `delay` and `tone`
 - [ ] Adding multiple files to Arduino project
+- [ ] RGB LED

@@ -22,55 +22,6 @@ In this circuit, the buzzer is on the "other" side of the switch, so nothing hap
 - [ ] TODO: Add pullup configuration for the push button, use it to turn on the on-board LED
 
 
-## RGB LED
-The more exciting component we'll be using is an RGB LED. This is like 3 LEDs in one: it has 4 pins: 1 pin for ground (GND) and the other 3 for red (R), blue (B) and green (G).
-Becasue we control each of RGB pins separately, we'll need to use 3 resistors, one for each pin, and connect it to 3 different input pins on the Arduino.
-
-### Circuit Diagram for RGB LED
-You'll need:
-- 1 RGB LED
-- 3 470Ω resistors. Any resistor between 200 - 1K will work, the higher the resistance the dimmer the light will be (which is not bad, when playing with a bread board close to the eyes)
-
-![RGB LED circuit with Arduino](images/rgb_led_circuit.png)
-
-
-### Code for RGB LED Example
-The full project  is available at [rgb_led_example/rgb_led_example.ino](rgb_led_example).
-
-The code is pretty simple, just flashing all 3 LEDS one by one. From Arduino/code perspective, there's no difference between having 3 distinct LEDs or having one RGB LED, it is treated in exactly the same way in code.
-
-```c
-/**
- * RGB LED test example
- */
-
-// *** Configuration ***
-const int LED_R = 6;
-const int LED_G = 5;
-const int LED_B = 4;
-// ***
-
-int leds[] = {LED_R, LED_G, LED_B};
-
-void setup() {
-  for (int i = 0; i < 3; i++) {
-    pinMode(leds[i], OUTPUT);
-  }
-}
-
-void loop() {
-  // flash leds in order
-  for (int i = 0; i < 3; i++) {
-    digitalWrite(leds[i], HIGH);
-    delay(500);
-    digitalWrite(leds[i], LOW);
-  }
-  delay(1000);
-}
-```
-
-
-
 Now that we're familiar with all the components, we can proceed to the main project.
 
 
@@ -106,4 +57,5 @@ This is going to look a bit heavy, but the design allocates a clearing in front 
 - [ ] Working with a push button
 - [ ] RGB LED
 - [ ] Debugging programs with Serial Monitor
-- [ ] Halting a program and setting the Arduino to sleep 
+- [ ] Halting a program and setting the Arduino to sleep
+

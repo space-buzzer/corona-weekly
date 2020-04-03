@@ -3,9 +3,9 @@
  */
 
 // *** Configuration ***
-const int LED_R = 6;
-const int LED_G = 5;
-const int LED_B = 4;
+const int LED_R = 3;
+const int LED_G = 4;
+const int LED_B = 5;
 // ***
 
 int leds[] = {LED_R, LED_G, LED_B};

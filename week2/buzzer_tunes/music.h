@@ -17,7 +17,7 @@ int REST = 0;
 
 // *** SUPER MARIO ***
 int super_mario_tempo = 200;
-int super_mario_music[] = {
+const int super_mario_music[] = {
 
   // Super Mario Bros theme
   // Score available at https://musescore.com/user/2123/scores/2145
