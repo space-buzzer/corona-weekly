@@ -62,7 +62,7 @@ void loop() {
 After mastering RGB LED programming we can move on to the main project.
 
 ## Code
-The full project is available at [buzzer_tune/buzzer_tune.ino](buzzer_tune).
+The full project is available at [buzzer_tunes/buzzer_tunes.ino](buzzer_tune).
 
 
 There are 2 functions to control a buzzer with an Arduino:
