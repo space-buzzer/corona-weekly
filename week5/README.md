@@ -89,7 +89,7 @@ Project specific needs:
 - Resistors for LED
 
 ## Circuit Diagram
-![Speed Test Circuit](images/speed_test_circuit.png)
+![Speed Test Circuit](images/speed_game_circuit.png)
 
 This is meant to be extended from the screen example above, so all it takes is wiring 2 buttons and an LED
 

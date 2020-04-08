@@ -48,9 +48,16 @@ There are many components this time, and the board will be full of cables.
 
 
 ## Circuit Diagram
-This circuit is designed to fit a half breadboard (30 rows), with Arduino Nano connected directly to the breadboard (on rows 1 to 15). <br />
-This is going to look a bit heavy, but the design allocates a clearing in front of the push buttons, to allow convenient manipulation of the buttons (to play the game!).
+![Music memory game circuit](images/music_game_circuit.png)
 
+This circuit is designed to fit a half breadboard (30 rows), with Arduino Nano connected directly to the breadboard (on rows 1 to 15). <br />
+This is going to look a bit heavy, but the design allocates a clearing in front of the push buttons, to allow convenient manipulation of the buttons (to play the game!).<br />
+
+Some unusual placement choices are the 4 pins of the LED span both sides of the board, on 2 rows. The buzzer is connected to the strips usually reserved for power -- but we're tight on space.
+
+The other part of the construction, that's not electrical, is painting the buttons in 4 different colors, or preparing a piece of paper with 2 different colors that can be placen in front of the buttons.
+
+Another memasure we take to make cable management nicer is to use the A* (analog) pins as extended digital pins.
 
 
 ## Recap

@@ -24,7 +24,7 @@ I use the following section comments at the beginning of a section
 ```
 
 ## Configuration
-For simple programs, the configuration is in the main file (`*.ino`) under the Configuration section. For bigger projects, the configuration is in a separate file (`Configuration.h`) te keep things nice and simple, and for easier reconfiguration. 
+For simple programs, the configuration is in the main file (`*.ino`) under the Configuration section. For bigger projects, the configuration is in a separate file (`Configuration.h`) te keep things nice and simple, and for easier reconfiguration.
 
 # Administrativia / TODO:
 These are not to me, with future plans
