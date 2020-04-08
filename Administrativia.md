@@ -35,6 +35,10 @@ These are not to me, with future plans
     - [ ] Use the switch on the knob to move between pitch and interval adjustments
 - [ ] Week 4: music memory game with switches
 - [ ] Week 5: Using the screen: draw the pitch/interval on the screen
+- [ ] Clock + temperature display with RTC component
+- [ ] Perfect hour timer
+      Set the length of the perfect hour, start the timer, bzzz when the time is up
+- [ ] Building a flip-flop (don't have transistors)
 
 ## Ideas
 - https://www.thingiverse.com/thing:2846251

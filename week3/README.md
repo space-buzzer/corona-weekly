@@ -27,7 +27,7 @@ In this project, we'll need to install and use an external library to read the v
 We'll be using the [Teensy encoder library](https://www.pjrc.com/teensy/td_libs_Encoder.html), and we'll install it using the Library Manager in Arduino IDE.
 
 Go to `Sketch` -> `Include Library` -> `Manage Libraries...` <br />
-In Library Manager, seach for `Encoder` from the top right seach box, and install *Encoder* by Paul Stoffregen, v1.4.1
+In Library Manager, search for `Encoder` from the top right seach box, and install *Encoder* by Paul Stoffregen, v1.4.1
 ![](images/arduino_library_encoder.png)
 
 After the library is installed, it can be included into the code:
