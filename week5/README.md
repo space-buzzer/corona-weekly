@@ -19,7 +19,7 @@ If it's asking you about dependencies -- select "Install All"
 ![Arduino IDE Library Manager](images/arduino_ide_ssd1306_library_deps.png)
 
 ### Screen Example Code
-The full project is available at [speed_game/speed_game.ino](speed_game).
+The full project is available at [speed_game](speed_game/speed_game.ino).
 
 The code of the example project is horribly copied from the [Adafruit example code](https://github.com/adafruit/Adafruit_SSD1306/tree/master/examples/ssd1306_128x64_i2c) with the minor difference of changing some of the Adafruit logo animation into Coronavirus animation.
 
