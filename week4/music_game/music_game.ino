@@ -23,6 +23,22 @@
 int cur_round = 0;
 bool winning = true;
 
+void test() {
+  int button_state;
+  while (true) {
+    bool pressed = false;
+    for (int b = 0; b < num_buttons; b++) {
+      button_state = digitalRead(buttons[b]);
+      if (button_state == PRESSED) {
+        button_pressed(b);
+        pressed = true;
+      }
+    }
+    if (!pressed) {
+      button_released();  
+    }
+  }
+}
 
 void setup_game() {
   // wait for the player to start the game 
@@ -64,8 +80,9 @@ void setup_game() {
           start_press = millis();
         }
     }
-  }  
-  
+  }
+
+  Serial.println("Starting the game");
   // get the random seed
   randomSeed(analogRead(0));
 
@@ -73,7 +90,6 @@ void setup_game() {
   cur_round = 0;
   winning = true;
 }
-
 
 
 void setup() {
@@ -86,9 +102,17 @@ void setup() {
     pinMode(buttons[i], INPUT_PULLUP);
   }
 
-  Serial.begin(9600);  
+  Serial.begin(9600);
 
+
+  // Start the game
   setup_game();
+  
+
+  // Instead of starting the game, run the `test` function here
+  // to help with initial setup and color to button assignment
+  // test();
+
 }
 
 
@@ -184,6 +208,7 @@ void loop() {
       Serial.println("is WINNING");
     } else {
       Serial.println("LOST");
+      end_of_game();
     }
     
     cur_round++;
@@ -218,6 +243,18 @@ void start_of_game() {
 }
 
 void end_of_game() {
-  // losing
-  // TODO: play end of game sound, flash LEDs
+  int melody[] = {
+    262, 196, 196, 220, 196, 0, 247, 262
+  };
+  
+  int noteDurations[] = {4, 8, 8, 4, 4, 4, 4, 4};
+  
+  for (int thisNote = 0; thisNote < 8; thisNote++) {
+    int noteDuration = 1000 / noteDurations[thisNote];
+    tone(15, melody[thisNote], noteDuration);
+    int pauseBetweenNotes = noteDuration * 1.30;
+    delay(pauseBetweenNotes);
+    // stop the tone playing:
+    noTone(15);
+  }
 }

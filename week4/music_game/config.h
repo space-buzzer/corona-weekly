@@ -1,6 +1,6 @@
 // *** Configuration ***
 
-const int BUZZER = 6;
+const int BUZZER = 15;
 const int LED_R = 7;
 const int LED_G = 17;
 const int LED_B = 16;

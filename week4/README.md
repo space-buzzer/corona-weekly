@@ -19,14 +19,21 @@ To demonstrate how a push button works, we'll build a simple circuit that uses t
 In this circuit, the buzzer is on the "other" side of the switch, so nothing happens when things are just connected. When you push the button, the switch is closed and current reaches the buzzer and it'll make a sound.
 
 
-- [ ] TODO: Add pullup configuration for the push button, use it to turn on the on-board LED
+- [ ] For extra curiculum, we can talk about pull-up mechanism that the Arduino provides (with ~20KΩ depends on the specific board) and how to make the same mechanism ourselves.
+Key principle: current flows in the path of least resistance.
+- [ ] Extra credit assignment: Add external pullup configuration for the push button, use it to turn on the on-board LED
 
 
 Now that we're familiar with all the components, we can proceed to the main project.
 
 
 ## Code
-The full project is available at [music_game/music_game.ino](music_game).
+The full project is available at [music_game](music_game/music_game.ino)
+
+The code is split between 2 files: `music_game.ino` and `config.h`. All pin configuration for the push buttons, LED pins and buzzer is in `config.h`, together with a few game-play related settings.
+
+The code has a `test()` that can help during initial setup, pin assignment and color to button matching. Use it instead of `setup_game()` in the `setup()` function.
+
 
 ## Components
 Generic requirements:
@@ -43,8 +50,11 @@ Project specific needs:
 - 1 x 100Ω resistor
 - 4 x push buttons, preferrably painted in different colors: red, green, blue and yellow
 
-
 There are many components this time, and the board will be full of cables.
+
+To make the game fun to play, it's nicer when the push buttons are painted with the color that's lit on the LED. The buttons can be painted with acrylic paints or oven nail polish. If you do not have suitable paint, a piece of paper with the colors placed in the space in front of the buttons can be used. The example below shows both painted buttons and paper markings.
+
+![Colorful buttons](images/colorful_buttons.jpg)
 
 
 ## Circuit Diagram
@@ -57,7 +67,7 @@ Some unusual placement choices are the 4 pins of the LED span both sides of the 
 
 The other part of the construction, that's not electrical, is painting the buttons in 4 different colors, or preparing a piece of paper with 2 different colors that can be placen in front of the buttons.
 
-Another memasure we take to make cable management nicer is to use the A* (analog) pins as extended digital pins.
+Another measure we take to make cable management nicer is to use the A* (analog) pins as extended digital pins.
 
 
 ## Recap
