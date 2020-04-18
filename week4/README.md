@@ -11,7 +11,7 @@ A push button is a mechanical component that can connect (or disconnect) a circu
 
 The photo shows a diagram of a push button on the right, and the schema on the left. When the button is pushed, the switch in the middle makes contact.
 
-To demonstrate how a push button works, we'll build a simple circuit that uses the arduino as a power source.
+To demonstrate how a push button works, we'll build a simple circuit that uses the Arduino as a power source.
 
 ### Circuit Diagram for Push Button
 ![Simple push button circuit](images/push_button_circuit.png)
@@ -19,9 +19,9 @@ To demonstrate how a push button works, we'll build a simple circuit that uses t
 In this circuit, the buzzer is on the "other" side of the switch, so nothing happens when things are just connected. When you push the button, the switch is closed and current reaches the buzzer and it'll make a sound.
 
 
-- [ ] For extra curiculum, we can talk about pull-up mechanism that the Arduino provides (with ~20KΩ depends on the specific board) and how to make the same mechanism ourselves.
+- [ ] For extra curriculum, we can talk about pull-up mechanism that the Arduino provides (with ~20KΩ depends on the specific board) and how to make the same mechanism ourselves.
 Key principle: current flows in the path of least resistance.
-- [ ] Extra credit assignment: Add external pullup configuration for the push button, use it to turn on the on-board LED
+- [ ] Extra credit assignment: Add external pull-up configuration for the push button, use it to turn on the on-board LED
 
 
 Now that we're familiar with all the components, we can proceed to the main project.
@@ -48,7 +48,7 @@ Project specific needs:
 - 3 x 470Ω resistor
 - Piezo Buzzer
 - 1 x 100Ω resistor
-- 4 x push buttons, preferrably painted in different colors: red, green, blue and yellow
+- 4 x push buttons, preferably painted in different colors: red, green, blue and yellow
 
 There are many components this time, and the board will be full of cables.
 
@@ -63,9 +63,9 @@ To make the game fun to play, it's nicer when the push buttons are painted with 
 This circuit is designed to fit a half breadboard (30 rows), with Arduino Nano connected directly to the breadboard (on rows 1 to 15). <br />
 This is going to look a bit heavy, but the design allocates a clearing in front of the push buttons, to allow convenient manipulation of the buttons (to play the game!).<br />
 
-Some unusual placement choices are the 4 pins of the LED span both sides of the board, on 2 rows. The buzzer is connected to the strips usually reserved for power -- but we're tight on space.
+Some unusual placement choices are the 4 pins of the LED, that span both sides of the board, on 2 rows. The buzzer is connected to the strips usually reserved for power -- but we're tight on space.
 
-The other part of the construction, that's not electrical, is painting the buttons in 4 different colors, or preparing a piece of paper with 2 different colors that can be placen in front of the buttons.
+The other part of the construction, that's not electrical, is painting the buttons in 4 different colors, or preparing a piece of paper with different colors that can be placed in front of the buttons.
 
 Another measure we take to make cable management nicer is to use the A* (analog) pins as extended digital pins.
 
