@@ -42,7 +42,7 @@ Using the default binding of SDA (data) and SCL (clock) pins, we need to connect
 
 
 ## Code
-The full code  project is available at [office_buzzer/office_buzzzer.ino](office_buzzer).
+The full code  project is available at [speed_game](speed_game/speed_game.ino).
 
 There's something interesting we're doing with our code this time: using the `PROGMEM` directive. <br />
 
@@ -87,6 +87,7 @@ Project specific needs:
 - 4-pin I2C LCD
 - LED (or RGB LED)
 - Resistors for LED
+- x2 Push Buttons
 
 ## Circuit Diagram
 ![Speed Test Circuit](images/speed_game_circuit.png)

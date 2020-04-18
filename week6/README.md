@@ -1,4 +1,4 @@
-# Real Time Clock
+# Real Time Clock with Watch Faces
 This week we're going to make a Pebble clone! We're going to build a watch with a nice screen and interchangeable watch faces.
 
 Every watch needs a screen, which we already used in [week5](../week5), but a watch also needs a component that can do accurate timekeeping. Our new component this week is a Real Time Clock (RTC) DS3231.
@@ -35,6 +35,8 @@ Let's look at this simple code that connects and reads a byte.
 #include <Wire.h>
 
 void setup() {
+    Serial.begin(9600);
+
     // Initialize I2C bus
     Wire.begin();
 
@@ -47,29 +49,113 @@ void setup() {
     Wire.requestFrom(0x68, (byte)1);
 
     byte res = Wire.read();
+    Serial.println(res, BIN);
 }
 
 void loop() {
 }
 ```
 
-The first line `Wire.begin();` initializes the I2C bus. Once 
+This short sketch sets up the I2C bus in the line `Wire.begin();`, and then starts communicating with a device addressed on `0x68`. I2C is a compact and powerful protocol, the same bus can be used to communicate with multiple devices, each identified by a unique address (Note: the address space is a single byte, so up to 127 devices on a bus).
 
-
-
-
+The rest of the code tells the device the address we want to read, and how many bytes to read from that address. We then read the byte we requested and then assigns the result to a local variable.
 
 #### Binary-Coded Decimal
+When we read data from a device we need to know how to parse the bytes we get. From the RTC datasheet, we know that RTC stores data as Binary-coded decimal (BCD) format.
+
+![](images/bcd_example.png)
+
+BCD encodes each digit of a decimal number in a constant number of bits. A common configuration is to use 4 bits for a single digit, so 1 byte for a 2-digit decimal number.<br />
+The image above demonstrates how we're going to read and parse numeric values.
+
+```c
+/**
+ * Send the given decimal number over the wire interface as BCD
+ * Works only for byte size -- 2 digit numbers 0-99
+ */
+void wire_as_bcd(byte num) {
+  byte bcd = ((num / 10) << 4) + num % 10;
+  bcd &= 0xFF;
+  Wire.write(bcd);
+}
+
+/**
+ * Read from wire and convert BCD to decimal.
+ * Works for 2-digit numbers (0-99), encoded in a single byte.
+ */
+byte read_byte_as_dec(){
+  byte num = Wire.read();
+  return (num & 0x0F) + ((num >> 4) * 10);
+}
+```
+
+The code above is an example of parsing to- and from BCD.
 
 
+### RTC Example Components
+Generic requirements:
+- Breadboard
+- Arduino
+- mini USB cable
+- Jumper wires
+
+Project specific needs:
+- DS3231 Real time clock component
+
+### RTC Example Circuit Diagram
+![Simple RTC Example](images/rtc_example_circuit.png)
+
+## Code
+The full code  project is available at [rtc_watch](rtc_watch/rtc_watch.ino).
+
+Now that we know how to directly work with RTC through I2C protocol, we can skip this part and use a nice library. We'll be using the `RTClib` from Adafruit.
+
+Go to `Sketch` -> `Include Libraries` -> `Manage Libraries...` <br />
+In the Library Manager window, search for `RTClib` and install the library by Adafruit.
+
+![Arduino IDE Library Manager](images/arduino_ide_rtclib.png)
+
+The work with the new library is very simple:
+
+```c
+// Declare
+RTC_DS3231 rtc;
+
+// initialize
+rtc.begin();
+
+// use
+DateTime now = rtc.now();
+```
+
+The rest of the code is dealing with the display, and updating and placing the numeric values in the appropriate places for each watch face.
+
+Notice how both the RCT and screen connected to the same SDA (data) and SCL (clock) pins. This is our I2C bus, and each component on the bus has a unique address. We can connect a monitor and real time clock, but won't be able to connect 2 of the same monitors in the same way -- since the addresses collide.
 
 
+## Real Time Clock components
+Generic requirements:
+- Breadboard
+- Arduino
+- mini USB cable
+- Jumper wires
+
+Project specific needs:
+- DS3231 Real time clock component
+- SSD1306 128x64 I2C screen
 
 
-# Structure for each project
-1. Short description
-2. Summary of new components used/new techniques
-3. BOM - bill of materials
-4. Circuit diagram
-5. Recap
-6. [Optional] Extra credit: List of extensions to the project
+## Real Time Clock Watch Faces Circuit Diagram
+![Circuit to build an RTC with small screen](images/rtc_watch_circuit.png)
+
+## Recap
+- Binary-coded decimals
+- Direct communication with a component, reading and writing (correctly coded) bytes
+- Using multiple components on the same I2C bus
+
+## Extra Credit
+- [ ] Build your own watch face
+
+## My TODOS
+- [ ] Add editing mode
+- [ ] Watch face switching with rotary encoder
