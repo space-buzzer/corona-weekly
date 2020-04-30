@@ -12,6 +12,15 @@
  * 
  * The game uses 4 push buttons, 4 LEDs and a buzzer.
  * 
+ * Instructions:
+ * - The goal of the game is to correctly repeat the sequence
+ *   of tones the Arduino is playing
+ * - A single game consists of several rounds, each round with
+ *   increased difficulty -- 1st round starts with 1 tone,
+ *   2nd round with 2 tones and so on all the way to 20 
+ *   (configurable max. rounds).
+ * - The player has 1 second (configurable).
+ * 
  */
 
 
@@ -104,15 +113,14 @@ void setup() {
 
   Serial.begin(9600);
 
+  // Instead of starting the game, uncomment the `test` function here
+  // to help with initial setup and color to button assignment.
+  // This function is blocking, the name will never start
+  // test();
 
   // Start the game
   setup_game();
   
-
-  // Instead of starting the game, run the `test` function here
-  // to help with initial setup and color to button assignment
-  // test();
-
 }
 
 
