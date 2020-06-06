@@ -1,3 +1,4 @@
+#include <EEPROM.h>
 #include <Wire.h>
 
 
@@ -25,6 +26,7 @@
 
 const long SAMPLE_INTERVAL = 5000;
 const long REPORT_INTERVAL = 30*60*1000l;
+const byte STORE_CODE = 0xb007;
 
 float temperature;
 byte second, minute, hour, day_of_week, day, month, year;
@@ -227,16 +229,96 @@ void setup() {
     // update OSF bit
     set_osf(false);    
   }
-  alltime_low.temperature = 100;
-  daily_low.temperature = 100;
+
+  // try to read previous values from eeprom, or initialize with current 
+  // datetime/temperature
+  bool success = read_stored_stats();
+  if (success) {
+    Serial.println("Successfully read stored records from EEPROM");
+  } else {
+    alltime_high = new_record();
+    alltime_low = new_record();
+    alltime_low.temperature = 100;
+    daily_high = new_record();
+    daily_low = new_record();
+    daily_low.temperature = 100;
+  }
 }
 
+
+// ****** EEPROM Storage ******
+void read_stored_record(Record &record, int &offset) {
+  record.year = EEPROM.read(offset++);
+  record.month = EEPROM.read(offset++);
+  record.day = EEPROM.read(offset++);
+  record.hour = EEPROM.read(offset++);
+  record.minute = EEPROM.read(offset++);
+  record.second = EEPROM.read(offset++);
+
+  byte temp1 = EEPROM.read(offset++);
+  byte temp2 = EEPROM.read(offset++);
+  record.temperature = temp1 + temp2/100.0;
+}
+
+bool read_stored_stats(){
+  // read the first byte, and compare it to our store code
+  int offset = 0;
+  byte code = EEPROM.read(offset++);
+
+  if (code != STORE_CODE) {
+    // do not have previous values in eeprom, cannot load 
+    return false;
+  }
+  
+  // Can read previously stored values from EEPROM
+  read_stored_record(alltime_high, offset);
+  read_stored_record(alltime_low, offset);
+  read_stored_record(daily_high, offset);
+  read_stored_record(daily_low, offset);
+  return true;
+}
+
+void store_record(Record &record, int &offset) {
+  EEPROM.update(offset++, record.year);
+  EEPROM.update(offset++, record.month);
+  EEPROM.update(offset++, record.day);
+  EEPROM.update(offset++, record.hour);
+  EEPROM.update(offset++, record.minute);
+  EEPROM.update(offset++, record.second);
+    
+  byte temp1 = byte(floor(record.temperature));
+  byte temp2 = record.temperature * 100  - temp1 * 100;
+  EEPROM.update(offset++, temp1);
+  EEPROM.update(offset++, temp2);
+}
+
+void store_stats() {
+  Serial.println("Storing temperature");
+  int offset = 0;
+  // start with a secret code
+  EEPROM.update(offset++, STORE_CODE);
+  store_record(alltime_high, offset);
+  store_record(alltime_low, offset);
+  store_record(daily_high, offset);
+  store_record(daily_low, offset);
+}
+
+// ****** (EEPROM Storage) ******
+
+
 void check_max_min(Record &low, Record &high){
+  bool changed = false;
   if (high.temperature < temperature) {
     high = new_record();
+    changed = true;
   }
   if (low.temperature > temperature) {
     low = new_record();
+    changed = true;
+  }
+
+  if (changed) {
+    store_stats();
   }
 
 }
