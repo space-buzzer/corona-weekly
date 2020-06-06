@@ -108,7 +108,11 @@ void update_datetime_from_env() {
     // else: nothing!
   }
 
-  day = (date[4] - '0') * 10 + (date[5] - '0');
+  if (date[4] == ' ') {
+    day = date[5] - '0';
+  } else {
+    day = (date[4] - '0') * 10 + (date[5] - '0');
+  }
   // leaving this open for Y3K bugs in the future, reading only last 2 chars
   year = (date[9] - '0') * 10 + (date[10] - '0');
 
