@@ -39,14 +39,25 @@ typedef struct {
   byte second, minute, hour, day, month, year;
 } Record;
 
+enum TEMP_FORMAT {
+  CELSIUS,
+  FAHRENHEIT,
+};
+
+TEMP_FORMAT DEFAULT_TEMP_FORMAT = CELSIUS;
 
 Record new_record(){
   return {temperature, second, minute, hour, day, month, year};
 };
 
-void format_record(Record &record, char *text) {
-  int temp1 = int(floor(record.temperature));
-  int temp2 = record.temperature * 100  - temp1 * 100;
+void format_record(Record &record, char *text, TEMP_FORMAT format) {
+  float temp = record.temperature;
+  if (format == FAHRENHEIT) {
+    temp = ((temp * 9 / 5) + 32);
+  }
+  int temp1 = int(floor(temp));
+  int temp2 = temp * 100 - temp1 * 100;
+
   sprintf(text, "%u.%uC at %02u/%02u/%02u %02u:%02u:%02u", 
     temp1, temp2, record.day, record.month, record.year,
     record.hour, record.minute, record.second
@@ -124,7 +135,7 @@ void update_datetime_from_env() {
   char* date = __DATE__;
   char* time = __TIME__;
 
-  // date: "%b %d %Y", example: Jan 01 2020
+  // date: "%b %d %Y", example: Jan 1 2020
   //Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
   switch(date[0]) {
     case 'J': month = (date[1] == 'a' ? 1 : (date[2] == 'n' ? 6 : 7)); break;
@@ -359,17 +370,17 @@ void loop() {
     
     Serial.print(" -- ");
     Serial.print("All time high: ");
-    format_record(alltime_high, report);
+    format_record(alltime_high, report, DEFAULT_TEMP_FORMAT);
     Serial.print(report);
     Serial.print(". All time low: ");
-    format_record(alltime_low, report);
+    format_record(alltime_low, report, DEFAULT_TEMP_FORMAT);
     Serial.println(report);
   
     Serial.print("                  Daily high: ");
-    format_record(daily_high, report);
+    format_record(daily_high, report, DEFAULT_TEMP_FORMAT);
     Serial.print(report);
     Serial.print(". Daily low: ");
-    format_record(daily_low, report);
+    format_record(daily_low, report, DEFAULT_TEMP_FORMAT);
     Serial.print(report);
   
     Serial.println("");
