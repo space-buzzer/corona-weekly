@@ -1,5 +1,7 @@
 #include <EEPROM.h>
 #include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 
 /**
@@ -21,16 +23,28 @@
  * BCD = Binary Coded Decimal. We use a single byte for numbers, so 2 digit decimals.
  */
 
+// *** Config ***
 
 #define DS3231_ADDRESS 0x68
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
 
-const long SAMPLE_INTERVAL = 5000;
-const long REPORT_INTERVAL = 1*60*1000l;
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+
+const long SAMPLE_INTERVAL = 200;
+const long REPORT_INTERVAL = 30*60*1000l;
 const byte STORE_CODE = 0xb007;
+
+// *** ***
+
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
 
 float temperature;
 byte second, minute, hour, day_of_week, day, month, year;
-char report[] = " 00.00C at 00/00/00 00:00:00";
+char report[] = " 00/00/00";
 long ms_since_last_report = REPORT_INTERVAL - SAMPLE_INTERVAL;
 
 
@@ -44,18 +58,34 @@ Record new_record(){
   return {temperature, second, minute, hour, day, month, year};
 };
 
-void format_record(Record &record, char *text) {
+
+int format_date(Record &record, char *text) {
+  return snprintf(text, 9,"%02u/%02u/%02u", record.day, record.month, record.year);
+}
+
+int format_time(Record &record, char *text) {
+  return snprintf(text, 6,"%02u:%02u", record.hour, record.minute);
+}
+
+int format_temperature(Record &record, char *text) {
   int temp1 = int(floor(record.temperature));
   int temp2 = record.temperature * 100  - temp1 * 100;
-  sprintf(text, "%u.%uC at %02u/%02u/%02u %02u:%02u:%02u", 
-    temp1, temp2, record.day, record.month, record.year,
-    record.hour, record.minute, record.second
+  return snprintf(text, 7,"%u.%uC", 
+    temp1, temp2
   );
+}
+
+void format_record(Record &record, char *text){
+  int pos = format_temperature(record, text);
+  text[pos] = ' ';
+  text[pos+1] = ' ';
+  pos = format_date(record, text+1+pos);
+  text[pos+1] = '\0';
 }
 
 Record alltime_high = new_record(), alltime_low = new_record();
 Record daily_high = new_record(), daily_low = new_record();
-
+Record now = new_record();
 
 /*********************************************
  *   --- Read/Write bytes on wire ---
@@ -207,13 +237,83 @@ void read_rtc_datetime() {
   temperature = (float)temperature_msb + (temperature_lsb >> 6) * 0.25f;
 }
 
+void refresh_display() {
+  // This is a lot of formatting/layouting code, all in this one method
+  // will consider separating
+  display.setTextSize(1);
+  display.setTextColor(WHITE, BLACK);
 
+  int16_t  x1, y1;
+  uint16_t w, h;
+
+  // Daily low
+  display.setCursor(0, 0);
+  // this lines saves to clear the entire display
+  display.print("      ");
+  display.setCursor(0, 0);
+  format_temperature(daily_low, report);
+  display.print(report);
+  display.setCursor(4, 9);
+  format_time(daily_low, report);
+  display.print(report);
+  
+  // Daily high
+  display.setCursor(86, 0);
+  display.print("      ");
+  format_temperature(daily_high, report);
+  display.getTextBounds(report, 0, 0, &x1, &y1, &w, &h);
+  display.setCursor(SCREEN_WIDTH - w, 0);
+  display.print(report);
+  display.setCursor(86+8, 9);
+  format_time(daily_high, report);
+  display.print(report);
+
+
+  display_alltime(alltime_low, 0);
+  display_alltime(alltime_high, 78);
+  
+  // display time
+  format_temperature(now, report);
+  display.setCursor(46, 13);
+  display.print(F("      "));
+  display.getTextBounds(report, 0, 0, &x1, &y1, &w, &h);
+  display.setCursor((SCREEN_WIDTH - w)/2, 13);
+  display.print(report);
+  
+  display.setTextSize(2);
+  format_time(now, report);
+  display.getTextBounds(report, 0, 0, &x1, &y1, &w, &h);
+  display.setCursor((SCREEN_WIDTH - w)/2, (SCREEN_HEIGHT - h)/2);
+  display.print(report);
+    
+  display.display();
+}
+
+void display_alltime(Record &record, int x){
+  format_temperature(record, report);
+  display.setCursor(x+8, SCREEN_HEIGHT-8*2 - 1);
+  display.print("      ");
+  display.setCursor(x+8, SCREEN_HEIGHT-8*2 - 1);
+  display.print(report);
+  display.setCursor(x, SCREEN_HEIGHT-8);
+  format_date(record, report);
+  display.print(report);
+}
 
 void setup() {
-  Wire.begin();
-  
   Serial.begin(9600);
   Serial.println("--- ** ---");
+
+  // start the display
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;); // Don't proceed, loop forever
+  }
+
+  Wire.begin();
+
+  display.display();
+  delay(500); // Pause for 2 seconds
 
   // Set the time if it was reset
   bool restart = read_osf();
@@ -241,6 +341,7 @@ void setup() {
     daily_low = new_record();
     daily_low.temperature = 100;
   }
+  display.clearDisplay();
 }
 
 
@@ -336,36 +437,20 @@ void temperature_logging() {
 void loop() {
   // Read and print the time
   read_rtc_datetime();
+  now = new_record();
+  
   temperature_logging();
+  refresh_display();
 
-  if (ms_since_last_report >= REPORT_INTERVAL) {  
-    Serial.print(day);
-    Serial.print("/");
-    Serial.print(month);
-    Serial.print("/");
-    Serial.print(year);
-    Serial.print(" ");
-    Serial.print(hour);
-    Serial.print(":");
-    Serial.print(minute);
+  if (ms_since_last_report >= REPORT_INTERVAL) {
+    format_time(now, report);
+    Serial.print(report);
     Serial.print(":");
     Serial.print(second);
     
     Serial.print(" -- ");
-    Serial.print("All time high: ");
-    format_record(alltime_high, report);
-    Serial.print(report);
-    Serial.print(". All time low: ");
-    format_record(alltime_low, report);
-    Serial.println(report);
-  
-    Serial.print("                  Daily high: ");
-    format_record(daily_high, report);
-    Serial.print(report);
-    Serial.print(". Daily low: ");
-    format_record(daily_low, report);
-    Serial.print(report);
-  
+    format_temperature(now, report);
+    Serial.print(report); 
     Serial.println("");
     ms_since_last_report = 0;
   }
